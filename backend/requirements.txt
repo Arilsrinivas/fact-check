@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+ddgs
+pydantic
+python-dotenv
+httpx
+beautifulsoup4
+spacy
+sentence-transformers
+faiss-cpu
+waybackpy
+python-whois
+ollama
+numpy

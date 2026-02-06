@@ -1,0 +1,24 @@
+# Stage 1: Builder
+FROM python:3.9-slim as builder
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+# Stage 2: Runtime
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Copy installed packages from builder
+COPY --from=builder /root/.local /root/.local
+COPY . .
+
+# Ensure scripts are in PATH
+ENV PATH=/root/.local/bin:$PATH
+
+# Run as non-root user (security best practice)
+RUN useradd -m appuser
+USER appuser
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
